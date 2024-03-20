@@ -1,4 +1,5 @@
 ## Forked to modify according to the [instructions found here](https://tricksty.com/uncategorized/deluge-modify-autoremoveplus-plugin-to-delete-dead-torrents-based-on-availability). I've done virtually no testing but it works for my purposes on Deluge v2 WebUI. Enjoy.
+### Forked from kevindelaney to fix an error that was preventing the script from running. I changed about 4 lines in the `core.py` file.
 
 AutoRemovePlus
 ==============

@@ -326,7 +326,7 @@ class Core(CorePluginBase):
         # }
 
         force_announce = self.config['force_reannounce_before_remove']
-
+        
         # update trackers to make sure the latest upload amount & time are reflected
         # prior to nuking torrent.
         #
@@ -631,18 +631,19 @@ class Core(CorePluginBase):
             if remove_cond:
                 if not remove:
                     self.pause_torrent(t)
-                    log.warn(
+                    log.warning(
                         "AutoRemovePlus: Pause torrent %s, %s, %s, %.3f"
-                        % (i, t.get_status(['name'])['name'], t.get_status(['distributed_copies'])['distributed_copies'], (time.time() - t.time_added) / 86400.0)
+                        % (i, t.get_status(['name'])['name'], t.get_status(['distributed_copies'])['distributed_copies'], (time.time() - t.get_status(['time_added'])['time_added']) / 86400.0)
             )
                 else:
                     if self.remove_torrent(i, t, remove_data):
                         changed = True
-                        log.warn(
+                        log.warning(
                             "AutoRemovePlus: Delete torrent %s, %s, %s, %.3f"
-                            % (i, t.get_status(['name'])['name'], t.get_status(['distributed_copies'])['distributed_copies'], (time.time() - t.time_added) / 86400.0)
+                            % (i, t.get_status(['name'])['name'], t.get_status(['distributed_copies'])['distributed_copies'], (time.time() - t.get_status(['time_added'])['time_added']) / 86400.0)
                         )                        
 
         # If a torrent exemption state has been removed save changes
         if changed:
+            log.info("saving torrent states")
             self.torrent_states.save()
